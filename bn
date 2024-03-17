@@ -11,8 +11,6 @@
     "\n",
     "Make sure to fill out all the required fields and to answer all the questions.\n",
     "\n",
-    "You will be working with a dataset that includes the results of international football matches from 1872 to 2024. The matches range from FIFA World Cups to regular friendly matches. \n",
-    "\n",
     "At the end of this project, you will have answered the following questions:\n",
     "\n",
     "1. What is the average number of goals for the home team? \n",
@@ -25,10 +23,7 @@
     "**Submission Requirements:**\n",
     "\n",
     "- Make sure that you run all cells with code in your notebook before submitting.\n",
-    "- You can add additional cells of code if you want, but make sure to clean up your notebook, and only leave the code required to answer the questions.\n",
-    "\n",
-    "\n",
-    "_Original Data Source: [Kaggle](https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017/data)_"
+    "- You can add additional cells of code if you want, but make sure to clean up your notebook, and only leave the code required to answer the questions."
    ]
   },
   {
@@ -131,13 +126,43 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 10,
    "id": "c2c5b5ea",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 45315 entries, 0 to 45314\n",
+      "Data columns (total 9 columns):\n",
+      " #   Column      Non-Null Count  Dtype \n",
+      "---  ------      --------------  ----- \n",
+      " 0   date        45315 non-null  object\n",
+      " 1   home_team   45315 non-null  object\n",
+      " 2   away_team   45315 non-null  object\n",
+      " 3   home_score  45315 non-null  int64 \n",
+      " 4   away_score  45315 non-null  int64 \n",
+      " 5   tournament  45315 non-null  object\n",
+      " 6   city        45315 non-null  object\n",
+      " 7   country     45315 non-null  object\n",
+      " 8   neutral     45315 non-null  bool  \n",
+      "dtypes: bool(1), int64(2), object(6)\n",
+      "memory usage: 2.8+ MB\n",
+      "Mean_home_team: 1.7393136930376256\n"
+     ]
+    }
+   ],
    "source": [
     "# Code here\n",
-    "\n"
+    "import pandas as pd\n",
+    "df = pd.read_csv('results.csv')\n",
+    "df.info()\n",
+    "\n",
+    "x = df['home_score'].mean()\n",
+    "\n",
+    "print(\"Mean_home_team:\", x)\n"
    ]
   },
   {
@@ -152,13 +177,23 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 11,
    "id": "4fb43467",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Mean_away_score: 1.1782412004854905\n"
+     ]
+    }
+   ],
    "source": [
     "# Code here\n",
-    "\n"
+    "y = df['away_score'].mean()\n",
+    "\n",
+    "print(\"Mean_away_score:\", y)\n"
    ]
   },
   {
@@ -173,13 +208,30 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 13,
    "id": "e5d93b04",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'country_home_scores' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "Cell \u001b[1;32mIn[13], line 5\u001b[0m\n\u001b[0;32m      1\u001b[0m \u001b[38;5;66;03m# Code here\u001b[39;00m\n\u001b[0;32m      3\u001b[0m chs\u001b[38;5;241m=\u001b[39m df\u001b[38;5;241m.\u001b[39mgroupby(\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mcountry\u001b[39m\u001b[38;5;124m'\u001b[39m)[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mhome_score\u001b[39m\u001b[38;5;124m'\u001b[39m]\u001b[38;5;241m.\u001b[39msum()\n\u001b[1;32m----> 5\u001b[0m high_chs\u001b[38;5;241m=\u001b[39m country_home_scores\u001b[38;5;241m.\u001b[39midxmax()\n\u001b[0;32m      7\u001b[0m \u001b[38;5;28mprint\u001b[39m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mHighest_home_score:\u001b[39m\u001b[38;5;124m\"\u001b[39m, high_chs)\n",
+      "\u001b[1;31mNameError\u001b[0m: name 'country_home_scores' is not defined"
+     ]
+    }
+   ],
    "source": [
     "# Code here\n",
-    "\n"
+    "\n",
+    "chs= df.groupby('country')['home_score'].sum()\n",
+    "\n",
+    "high_chs= country_home_scores.idxmax()\n",
+    "\n",
+    "print(\"Highest_home_score:\", high_chs)\n"
    ]
   },
   {
@@ -194,12 +246,31 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 20,
    "id": "2d65e4e3",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Top 3 types of tournaments:\n",
+      "Friendly                        17773\n",
+      "FIFA World Cup qualification     8016\n",
+      "UEFA Euro qualification          2815\n",
+      "Name: tournament, dtype: int64\n"
+     ]
+    }
+   ],
    "source": [
     "# Code here\n",
+    "\n",
+    "tournament_counts = df['tournament'].value_counts()\n",
+    "\n",
+    "top3_tournaments = tournament_counts.head(3)\n",
+    "\n",
+    "print(\"Top 3 types of tournaments:\")\n",
+    "print(top3_tournaments)\n",
     "\n"
    ]
   },
@@ -217,12 +288,36 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 9,
    "id": "db30530c",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "            date  home_team      away_team  home_score  away_score  \\\n",
+      "1311  1930-07-13    Belgium  United States           0           3   \n",
+      "1312  1930-07-13     France         Mexico           4           1   \n",
+      "1313  1930-07-14     Brazil     Yugoslavia           1           2   \n",
+      "1314  1930-07-14       Peru        Romania           1           3   \n",
+      "1315  1930-07-15  Argentina         France           1           0   \n",
+      "\n",
+      "          tournament        city  country  neutral  \n",
+      "1311  FIFA World Cup  Montevideo  Uruguay     True  \n",
+      "1312  FIFA World Cup  Montevideo  Uruguay     True  \n",
+      "1313  FIFA World Cup  Montevideo  Uruguay     True  \n",
+      "1314  FIFA World Cup  Montevideo  Uruguay     True  \n",
+      "1315  FIFA World Cup  Montevideo  Uruguay     True  \n"
+     ]
+    }
+   ],
    "source": [
     "# Code here\n",
+    "\n",
+    "fifa_df = df[df['tournament'] == 'FIFA World Cup']\n",
+    "\n",
+    "print(fifa_df.head())\n",
     "\n"
    ]
   },
@@ -238,13 +333,35 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 39,
    "id": "8dd33359",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "            date  home_team      away_team  home_score  away_score  \\\n",
+      "1311  1930-07-13    Belgium  United States           0           3   \n",
+      "1312  1930-07-13     France         Mexico           4           1   \n",
+      "1313  1930-07-14     Brazil     Yugoslavia           1           2   \n",
+      "1314  1930-07-14       Peru        Romania           1           3   \n",
+      "1315  1930-07-15  Argentina         France           1           0   \n",
+      "\n",
+      "          tournament        city  country  neutral  total_score  \n",
+      "1311  FIFA World Cup  Montevideo  Uruguay     True            3  \n",
+      "1312  FIFA World Cup  Montevideo  Uruguay     True            5  \n",
+      "1313  FIFA World Cup  Montevideo  Uruguay     True            3  \n",
+      "1314  FIFA World Cup  Montevideo  Uruguay     True            4  \n",
+      "1315  FIFA World Cup  Montevideo  Uruguay     True            1  \n"
+     ]
+    }
+   ],
    "source": [
     "# Code here\n",
-    "\n"
+    "\n",
+    "fifa_df['total_score'] = fifa_df['home_score'] + fifa_df['away_score']\n",
+    "print(fifa_df.head())\n"
    ]
   },
   {
@@ -257,12 +374,27 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 8,
    "id": "682c7a8a",
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "ename": "NameError",
+     "evalue": "name 'fifa_goals_by_country' is not defined",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+      "Cell \u001b[1;32mIn[8], line 3\u001b[0m\n\u001b[0;32m      1\u001b[0m \u001b[38;5;66;03m# Code here\u001b[39;00m\n\u001b[1;32m----> 3\u001b[0m country_highest_fifa_goals \u001b[38;5;241m=\u001b[39m fifa_goals_by_country\u001b[38;5;241m.\u001b[39midxmax()\n\u001b[0;32m      4\u001b[0m \u001b[38;5;28mprint\u001b[39m(\u001b[38;5;124m\"\u001b[39m\u001b[38;5;124mCountry with the highest overall FIFA World Cup goals:\u001b[39m\u001b[38;5;124m\"\u001b[39m, country_highest_fifa_goals)\n",
+      "\u001b[1;31mNameError\u001b[0m: name 'fifa_goals_by_country' is not defined"
+     ]
+    }
+   ],
    "source": [
     "# Code here\n",
+    "\n",
+    "country_highest_fifa_goals = fifa_goals_by_country.idxmax()\n",
+    "print(\"Country with the highest overall FIFA World Cup goals:\", country_highest_fifa_goals)\n",
     "\n"
    ]
   },
@@ -291,7 +423,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.11.5"
+   "version": "3.11.4"
   }
  },
  "nbformat": 4,
